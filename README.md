@@ -2,7 +2,7 @@
 
 A 3D credit card experimetal site
 
-- [DEMO](https://budavariam.github.io/3dcreditcard)
+- [DEMO](https://budavariam.github.io/3DCreditCard)
 
 - [Font convert](https://gero3.github.io/facetype.js/)
 - [Inspiration](https://lnardon.github.io/3DCreditCard/)
