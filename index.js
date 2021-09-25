@@ -1,6 +1,6 @@
 // IMPORTS
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js";
-import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js";
+import { CustomOrbitControls } from "./CustomOrbitControls.js";
 import { OBJLoader } from "https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/loaders/OBJLoader.js";
 import { MTLLoader } from "https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/loaders/MTLLoader.js";
 
@@ -14,21 +14,22 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setClearColor(0x131313);
 renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(window.innerWidth / 2, window.innerHeight);
+// renderer.setSize(window.innerWidth / 2, window.innerHeight);
+renderer.setSize(400, 200);
 
 //CAMERA
 const camera = new THREE.PerspectiveCamera(
-  55,
+  30,
   window.innerWidth / window.innerHeight,
-  0.1,
-  3000
+  0.15,
+  1000
 );
 camera.position.z = 100;
 
 // CONTROLS
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.autoRotate = true;
-controls.autoRotateSpeed = 3;
+const controls = new CustomOrbitControls(camera, renderer.domElement);
+// controls.autoRotate = true;
+// controls.autoRotateSpeed = 3;
 
 //LIGHTS
 const spotLight = new THREE.SpotLight(0xffffff);
@@ -119,33 +120,74 @@ function render() {
   requestAnimationFrame(render);
 }
 
-window.addEventListener(
-  "resize",
-  function () {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  },
-  false
-);
+// window.addEventListener(
+//   "resize",
+//   function () {
+//     camera.aspect = window.innerWidth / window.innerHeight;
+//     camera.updateProjectionMatrix();
+//     renderer.setSize(window.innerWidth, window.innerHeight);
+//   },
+//   false
+// );
 
 // Event Listeners
 document.getElementById("name").addEventListener("keyup", (e) => {
   // Change Card Name Model
   createName(e.target.value);
+  controls.reset()
 });
 
 document.getElementById("number").addEventListener("keyup", (e) => {
   // Change Card number Model
   createCardNum(e.target.value);
+  controls.reset()
 });
 
 document.getElementById("expiration").addEventListener("keyup", (e) => {
   // Change Card Expiration Model
   createExp(e.target.value);
+  controls.reset()
 });
 
 document.getElementById("cvv").addEventListener("keyup", (e) => {
   // Change Card Expiration Model
   createCvv(e.target.value);
 });
+
+let lastKnownScrollPosition = 0;
+let ticking = false;
+//camera.center.set(0,0,0)
+
+let prevPos = 0
+
+function updateRotation(scrollPos) {
+  const dir = (scrollPos > prevPos) ? 1 : -1
+  controls.rotateLeft((dir * 0.2) / (Math.PI));
+
+  // console.log(getScrollPercent(), "asd")
+  prevPos = scrollPos
+}
+
+
+// function getScrollPercent() {
+//   var h = document.documentElement,
+//     b = document.body,
+//     st = 'scrollTop',
+//     sh = 'scrollHeight';
+//   return (h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight) * 100;
+// }
+
+document.addEventListener('scroll', function (e) {
+  lastKnownScrollPosition = window.scrollY;
+
+  if (!ticking) {
+    window.requestAnimationFrame(function () {
+      updateRotation(lastKnownScrollPosition);
+      ticking = false;
+    });
+
+    ticking = true;
+  }
+});
+window.controls = controls;
+window.camera = camera;
