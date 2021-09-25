@@ -102,8 +102,8 @@ const createText = (id, text, [x, y, z], isRotated) => {
   });
 }
 
-const createName = (text = "YOUR NAME HERE") => createText(ID.NAME, text, [-30, -15, 1]);
-const createCardNum = (text = "1234-5678-9100-0000") => createText(ID.CARDNUM, text, [-30, -5, 1]);
+const createName = (text = "Your Full Name") => createText(ID.NAME, text, [-30, -15, 1]);
+const createCardNum = (text = "1234 5678 9100 0000") => createText(ID.CARDNUM, text, [-30, -5, 1]);
 const createExp = (text = "21/12") => createText(ID.EXP, text, [15, -15, 1]);
 const createCvv = (text = "000") => createText(ID.CVV, text, [-15, -15, -1], true);
 
