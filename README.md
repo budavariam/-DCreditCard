@@ -6,3 +6,4 @@ A 3D credit card experimetal site
 
 - [Font convert](https://gero3.github.io/facetype.js/)
 - [Inspiration](https://lnardon.github.io/3DCreditCard/)
+- [Awesome example](https://codesandbox.io/s/credit-card-validation-with-threejs-tyumm?file=/src/Animation.js:51-68)
